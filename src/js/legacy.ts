@@ -2,4 +2,5 @@
 // they are in place before sendspin-js runs.
 import "./legacy-polyfills";
 import "./legacy-chunk-merger";
+import "./legacy-diagnostics";
 import "./main";

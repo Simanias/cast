@@ -1,10 +1,10 @@
-// sendspin-js plays every decoded chunk (a few ms of audio) as its own Web Audio source
-// node, which is over a hundred nodes per second. The old Chromium on legacy Cast
-// firmware can't keep up with that and stutters, so the legacy build merges consecutive
-// chunks into buffers of about 100 ms before they reach the scheduler.
+// sendspin-js plays every decoded chunk as its own Web Audio source node: 40 per second
+// for PCM (25 ms chunks), about 10 for FLAC. The old Chromium on legacy Cast firmware
+// stutters more the more nodes it plays, so the legacy build merges consecutive chunks
+// into buffers of about 400 ms before they reach the scheduler.
 import { AudioScheduler, type DecodedAudioChunk } from "@sendspin/sendspin-js";
 
-const MERGED_DURATION_US = 100_000;
+const MERGED_DURATION_US = 400_000;
 // a chunk further than this from where the previous one ended starts a new buffer, so
 // the scheduler still sees (and resyncs on) real gaps in the stream
 const MAX_GAP_US = 1_000;
