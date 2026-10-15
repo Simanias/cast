@@ -505,7 +505,7 @@ async function connectToServer(baseUrl: string): Promise<boolean> {
       correctionMode: "sync", // Explicit sync mode for multi-device playback
       storage: memoryStorage, // Cast doesn't support localStorage
       syncDelay: providedSyncDelay,
-      bufferCapacity: 1024 * 1024 * 2, // 2MB (GC4A memory constraint)
+      bufferCapacity: 1024 * 512, // test: 512 KB instead of 2 MB, to see whether decoding bursts cause the stutter
       // Use codecs from sender config, default to PCM for maximum compatibility.
       // Advertise all known codecs but with the preferred one(s) first.
       codecs: buildCodecList(providedCodecs ?? DEFAULT_CODECS),
