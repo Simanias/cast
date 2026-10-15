@@ -2,6 +2,7 @@
 // from one whose audio output misbehaves: the audio context's real sample rate (old
 // Chromium ignores the requested one) and how late the main thread runs its timers.
 import { AudioScheduler } from "@sendspin/sendspin-js";
+import { headlessState, readDisplayInfo } from "./legacy-headless";
 
 const LAG_SAMPLE_MS = 250;
 const LAG_REPORT_MS = 10_000;
@@ -18,7 +19,8 @@ AudioScheduler.prototype.initAudioContext = function (
     console.log(
       `Sendspin legacy: AudioContext ${context.sampleRate} Hz, ` +
         `baseLatency=${(context as any).baseLatency ?? "n/a"}, ` +
-        `UA=${navigator.userAgent}`,
+        `display=${JSON.stringify(readDisplayInfo())}, ` +
+        `screen skipped=${headlessState()}, UA=${navigator.userAgent}`,
     );
   }
 };
