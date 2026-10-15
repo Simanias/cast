@@ -172,10 +172,10 @@
   resolved "https://registry.npmjs.org/@rolldown/pluginutils/-/pluginutils-1.0.0-rc.12.tgz"
   integrity sha512-HHMwmarRKvoFsJorqYlFeFRzXZqCt2ETQlEDOb9aqssrnVBB1/+xgTGtuTrIk5vzLNX1MjMtTf7W9z3tsSbrxw==
 
-"@sendspin/sendspin-js@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@sendspin/sendspin-js/-/sendspin-js-3.1.0.tgz#b62b6447dcb4740bf3c61aafc20097b21f9de63e"
-  integrity sha512-tljpoE7JwGIvAMk9M+UBGKkur4ME1RyZRxIV/FFJ0trp6fJOC5bWjewaO8bgm9ybEKO64su5PMbn/u63YzlaMQ==
+"@sendspin/sendspin-js@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@sendspin/sendspin-js/-/sendspin-js-3.2.1.tgz#be59057472e27b65742b7faea26e383e1cb4e4ef"
+  integrity sha512-FlnHUV2hppNg/W3yIvV0v9XmDkHE/tbmHkc2/wWDE9CMfqNdCkGhaTsd4cRa4n5FafS3wTDccceFtPvNiacKvg==
   dependencies:
     opus-encdec "^0.1.1"
 
