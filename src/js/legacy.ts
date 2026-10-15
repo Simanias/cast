@@ -4,4 +4,6 @@ import "./legacy-polyfills";
 import "./legacy-chunk-merger";
 import "./legacy-diagnostics";
 import "./legacy-headless";
-import "./main";
+import { useLegacyDeviceSettings } from "./main";
+
+useLegacyDeviceSettings();
