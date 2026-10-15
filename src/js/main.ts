@@ -230,19 +230,46 @@ function getHardwareVolume(): { volume: number; muted: boolean } {
   return { volume: 100, muted: false };
 }
 
+// A volume slider sends a command for every step, and old Cast firmware stalls on each
+// system volume change, so only the latest level is applied, at most this often.
+const VOLUME_APPLY_INTERVAL_MS = 250;
+let pendingVolume: { volume: number; muted: boolean } | null = null;
+let volumeTimer: ReturnType<typeof setTimeout> | null = null;
+
 // Set hardware volume via Cast system
 // Silently no-ops if methods unavailable on device
 function setHardwareVolume(volume: number, muted: boolean): void {
-  if (!castContext) return;
+  pendingVolume = { volume, muted };
+  if (volumeTimer === null) {
+    applyPendingVolume();
+  }
+}
+
+function applyPendingVolume(): void {
+  const target = pendingVolume;
+  pendingVolume = null;
+  if (!target || !castContext) {
+    volumeTimer = null;
+    return;
+  }
 
   // Cast API uses 0.0-1.0 for volume level
   if (castContext.setSystemVolumeLevel) {
-    castContext.setSystemVolumeLevel(volume / 100);
+    castContext.setSystemVolumeLevel(target.volume / 100);
   }
-  if (castContext.setSystemVolumeMuted) {
-    castContext.setSystemVolumeMuted(muted);
+  if (
+    castContext.setSystemVolumeMuted &&
+    target.muted !== getHardwareVolume().muted
+  ) {
+    castContext.setSystemVolumeMuted(target.muted);
   }
-  console.log("Sendspin: Set hardware volume:", volume, "muted:", muted);
+  console.log(
+    "Sendspin: Set hardware volume:",
+    target.volume,
+    "muted:",
+    target.muted,
+  );
+  volumeTimer = setTimeout(applyPendingVolume, VOLUME_APPLY_INTERVAL_MS);
 }
 
 // Send status update to sender
